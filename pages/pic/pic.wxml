@@ -1,0 +1,18 @@
+<form bindsubmit="searchSubmit">
+<view class="content-view">
+<input name="key" class="pic-input content" placeholder-class="pic-input-p" type="text" value="{{searchKey}}" placeholder="搜索发现更多..." bindfocus="searchBind"
+bindblur="searchBlur"/>
+</view>
+<button style="display:{{display}};" id="search-btn" type="warn" class="search-btn" form-type="submit">确   认</button>
+</form>
+<text class="none-text" style="display:{{noneTextDisplay}};">抱歉，您搜索的内容不存在~</text>
+
+<view class="top-view" style="display:{{viewDisplay}};" wx:for="{{pics}}">
+<image class="item" src="{{item.path1}}" mode="aspectFill"></image>
+<image class="item" src="{{item.path2}}" mode="aspectFill"></image>
+<image class="item" src="{{item.path3}}" mode="aspectFill"></image>
+</view>
+
+<loading hidden="{{hidden}}">
+  加载中...
+ </loading>

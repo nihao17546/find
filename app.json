@@ -1,0 +1,31 @@
+{
+  "pages": [
+    "pages/pic/pic",
+    "pages/my/my"
+  ],
+  "window": {
+    "navigationBarTitleText": "FIND",
+    "backgroundTextStyle": "dark",
+    "backgroundColor": "#eeeeee"
+  },
+  "tabBar": {
+    "list": [
+      {
+        "pagePath": "pages/pic/pic",
+        "text": "发现"
+      },
+      {
+        "pagePath": "pages/my/my",
+        "text": "我的"
+      }
+    ],
+    "selectedColor": "#CD5C5C",
+    "backgroundColor":"white",
+    "position": "top",
+    "borderStyle": "black"
+  },
+  "networkTimeout": {
+    "request": 10000,
+    "downloadFile": 10000
+  }
+}

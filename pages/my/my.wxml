@@ -1,0 +1,60 @@
+<view class="both_class" hidden="{{regist_hidden}}">
+<view class="text_show_view">
+    <text class="text_show">－注册后体验更多功能－</text>
+</view>
+<form bindsubmit="registSubmit">
+  <view class="section">
+    <input name="nickname" maxlength="15" class="from_input" placeholder="请输入昵称"/>
+  </view>
+  <view class="section">
+    <input name="user_id" class="from_input" placeholder="设置帐号(英文或数字组成,长度6-12)" maxlength="12"/>
+  </view>
+  <view class="section">
+    <input name="password" class="from_input" password="true" placeholder="设置密码(长度6-20)" maxlength="20"/>
+  </view>
+  <view class="section">
+    <input name="password_r" class="from_input" password="true" placeholder="确认密码" maxlength="20"/>
+  </view>
+  <view class="btn-area">
+    <button formType="submit" class="regist_btn">注册</button>
+    <button type="primary" formType="reset" bindtap="to_login">有账号,直接登录</button>
+  </view>
+</form>
+<view class="text_other_view">
+    <text class="text_other_show">——其它账户登录——</text>
+</view>
+    <button type="primary" formType="reset" bindtap="to_author" disabled="{{weixinBtn}}">微信登录</button>
+</view>
+<view class="both_class" hidden="{{login_hidden}}">
+<view class="text_show_view">
+    <text class="text_show">－登录后体验更多功能－</text>
+</view>
+<form bindsubmit="loginSubmit">
+<view class="section">
+    <input name="user_id" class="from_input" placeholder="请输入帐号" maxlength="12"/>
+</view>
+  <view class="section">
+    <input name="password" class="from_input" password="true" placeholder="请输入密码" maxlength="20"/>
+  </view>
+<view class="btn-area">
+    <button formType="submit" class="regist_btn">登录</button>
+    <button type="primary" formType="reset" bindtap="to_regist">注册</button>
+</view>
+</form>
+<view class="text_other_view">
+    <text class="text_other_show">——其它账户登录——</text>
+</view>
+    <button type="primary" formType="reset" bindtap="to_author" disabled="{{weixinBtn}}">微信登录</button>
+</view>
+
+<view class="my_class" hidden="{{my_hidden}}">
+<view class="my_head_back">
+<view class="item head_pic_item">
+<image class="head_pic" src="{{user.headPic}}"></image>
+</view>
+<view class="item nickname_item">{{user.nickname}}</view>
+<view class="item caozuo_item">
+<text bindtouchend="logout">退出</text>
+</view>
+</view>
+</view>
