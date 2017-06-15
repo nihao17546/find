@@ -12,7 +12,23 @@ Page({
     login_hidden:true,
     my_hidden:true,
     user:{},
-    weixinBtn: false
+    weixinBtn: false,
+    weixinBtnText: '微信登录'
+  },
+
+  weixinLoginFun:function(re){
+    if(re){
+      this.setData({
+        weixinBtn: true,
+        weixinBtnText: '正在登录中...'
+      })
+    }
+    else{
+      this.setData({
+        weixinBtn: false,
+        weixinBtnText: '微信登录'
+      })
+    }
   },
 
   /**
@@ -285,92 +301,20 @@ Page({
 
   to_author:function(){
     var the = this;
-    the.setData({
-      'weixinBtn':true
-    })
-    wx.getUserInfo({
+    the.weixinLoginFun(true)
+    wx.login({
       success: function (res) {
-        var userInfo = res.userInfo
-        var nickName = userInfo.nickName
-        var avatarUrl = userInfo.avatarUrl
-        var gender = userInfo.gender //性别 0：未知、1：男、2：女
-        var province = userInfo.province
-        var city = userInfo.city
-        var country = userInfo.country
-        wx.login({
-          success: function (res) {
-            if (res.code) {
-              wx.request({
-                url: 'https://api.weixin.qq.com/sns/jscode2session',
-                data:{
-                  appid: app.data.appId,
-                  secret: app.data.appSecret,
-                  js_code: res.code,
-                  grant_type: "authorization_code"
-                },
-                success: function (res1) {
-                  if (res1.data.openid){
-                    wx.request({
-                      url: app.data.authUrl,
-                      data: {
-                        openId: res1.data.openid,
-                        nickName: nickName,
-                        avatarUrl: avatarUrl,
-                        gender: gender,
-                        province: province,
-                        city: city,
-                        country: country
-                      },
-                      success: function (res2) {
-                        if(res2.data.code==200){
-                          the.setData({
-                            'user': res2.data.result,
-                            'regist_hidden': true,
-                            'login_hidden': true,
-                            'my_hidden': false
-                          })
-                          wx.setStorage({
-                            key: "1_token",
-                            data: "pph_&" + res1.data.openid
-                          })
-                          the.setData({
-                            'weixinBtn': false
-                          })
-                        }
-                        else{
-                          console.log('获取用户信息失败:' + res2.data.message)
-                          the.setData({
-                            'weixinBtn': false
-                          })
-                        }
-                      },
-                      complete: function () {
-
-                      }
-                    })
-                  }
-                  else{
-                    console.log('获取用户信息失败:' + res1.data.errmsg)
-                    the.setData({
-                      'weixinBtn': false
-                    })
-                  }
-                },
-                complete: function () {
-
-                }
-              })
-            } else {
-              console.log('获取用户登录态失败！' + res.errMsg)
-              the.setData({
-                'weixinBtn': false
-              })
-            }
-          },
-          complete:function(){
-            
-          }
-        });
+        console.log('success')
+        console.log('success')
+        console.log('success')
+        console.log('success')
+        console.log('success')
+      },
+      fail: function (res) {
+        
+      },
+      complete: function () {
+        the.weixinLoginFun(false)
       }
     })
   }

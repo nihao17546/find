@@ -8,9 +8,7 @@ App({
     registUrl:"http://127.0.0.1:8099/user/regist",
     checkUserId:"http://127.0.0.1:8099/user/check",
     loginUrl:"http://127.0.0.1:8099/user/login",
-    appId:"wx51a25b79d1e4d7b0",
-    appSecret:"63d979a5dc7103a3605afecab365200e",
-    authUrl:"http://127.0.0.1:8099/user/auth"
+    codeUrl:"http://127.0.0.1:8099/user/code"
   },
 
   /**

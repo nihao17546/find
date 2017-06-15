@@ -7,6 +7,7 @@ Page({
    */
   data: {
     pics:[],
+    pictures:[],
     searchKey:'',
     page:1,
     display:'none',
@@ -29,6 +30,7 @@ Page({
       },
       success: function (res) {
         var p1 = [], p2 = [], p3 = [], p = [];
+        var pp = [];
         for (var i = 0; i < res.data.length; i++) {
           if (i % 3 == 0) {
             p1.push(app.data.picCompressPrefix + res.data[i].path);
@@ -39,6 +41,7 @@ Page({
           else {
             p3.push(app.data.picCompressPrefix + res.data[i].path);
           }
+          pp.push(app.data.picPrefix + res.data[i].path);
         }
         var len = Math.max(p1.length, p2.length, p3.length)
         for (var i = 0; i < len; i++) {
@@ -54,7 +57,10 @@ Page({
           }
           p.push(obj);
         }
-        the.setData({ pics: p });
+        the.setData({
+          pics: p,
+          pictures: pp
+        });
       },
       complete: function(){
         if(callBack){
@@ -80,6 +86,7 @@ Page({
       success: function (res) {
         if (res.data.data.length>0){
           var p1 = [], p2 = [], p3 = [], p = [];
+          var pp = [];
           for (var i = 0; i < res.data.data.length; i++) {
             if (i % 3 == 0) {
               p1.push(app.data.picCompressPrefix + res.data.data[i].path);
@@ -90,6 +97,7 @@ Page({
             else {
               p3.push(app.data.picCompressPrefix + res.data.data[i].path);
             }
+            pp.push(app.data.picPrefix + res.data.data[i].path);
           }
           var len = Math.max(p1.length, p2.length, p3.length)
           for (var i = 0; i < len; i++) {
@@ -106,7 +114,11 @@ Page({
             p.push(obj);
           }
           var c = the.data.pics.concat(p);
-          the.setData({ pics: c });
+          var cc = the.data.pictures.concat(pp);
+          the.setData({ 
+            pics: c,
+            pictures: cc
+          });
         }
         else {
           the.setData({
@@ -135,6 +147,7 @@ Page({
       success: function (res) {
         if (res.data.data.length>0){
           var p1 = [], p2 = [], p3 = [], p = [];
+          var pp = [];
           for (var i = 0; i < res.data.data.length; i++) {
             if (i % 3 == 0) {
               p1.push(app.data.picCompressPrefix + res.data.data[i].path);
@@ -145,6 +158,7 @@ Page({
             else {
               p3.push(app.data.picCompressPrefix + res.data.data[i].path);
             }
+            pp.push(app.data.picPrefix + res.data.data[i].path);
           }
           var len = Math.max(p1.length, p2.length, p3.length)
           for (var i = 0; i < len; i++) {
@@ -160,7 +174,10 @@ Page({
             }
             p.push(obj);
           }
-          the.setData({ pics: p });
+          the.setData({ 
+            pics: p,
+            pictures: pp
+          });
         }
         else{
           the.setData({
@@ -256,7 +273,8 @@ Page({
       })
       if (v != '') {
         this.setData({
-          pics: []
+          pics: [],
+          pictures: []
         })
         this.searchPics(this.data.page, 30, v)
       }
@@ -273,6 +291,18 @@ Page({
     this.setData({
       display: 'none',
       viewDisplay: ''
+    })
+  },
+  showPic:function(e){
+    var that = this,
+      index = parseInt(e.currentTarget.dataset.index),
+      pa = parseInt(e.currentTarget.dataset.pa),
+      pictures = this.data.pictures;
+      var ind;
+      ind = index * 3 + pa - 1;
+    wx.previewImage({
+      current: pictures[ind],
+      urls: pictures
     })
   }
 })

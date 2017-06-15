@@ -23,7 +23,7 @@
 <view class="text_other_view">
     <text class="text_other_show">——其它账户登录——</text>
 </view>
-    <button type="primary" formType="reset" bindtap="to_author" disabled="{{weixinBtn}}">微信登录</button>
+    <button type="primary" formType="reset" bindtap="to_author" disabled="{{weixinBtn}}">{{weixinBtnText}}</button>
 </view>
 <view class="both_class" hidden="{{login_hidden}}">
 <view class="text_show_view">
@@ -44,7 +44,7 @@
 <view class="text_other_view">
     <text class="text_other_show">——其它账户登录——</text>
 </view>
-    <button type="primary" formType="reset" bindtap="to_author" disabled="{{weixinBtn}}">微信登录</button>
+    <button type="primary" formType="reset" bindtap="to_author" disabled="{{weixinBtn}}">{{weixinBtnText}}</button>
 </view>
 
 <view class="my_class" hidden="{{my_hidden}}">
