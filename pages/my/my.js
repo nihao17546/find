@@ -8,7 +8,6 @@ Page({
   data: {
     btnLogin:'登录',
     userIdRex:'^[a-zA-Z0-9]{6,12}$',
-    regist_hidden:true,
     login_hidden:true,
     my_hidden:true,
     user:{},
@@ -43,46 +42,55 @@ Page({
    */
   onReady: function () {
     var the = this;
-    wx.getStorage({
-      key: '1_token',
-      success: function (res) {
-        wx.request({
-          url: app.data.checkUserId,
-          data: {
-            userId: res.data
-          },
-          success: function (res1) {
-            if (res1.data.code == 200) {
-              the.setData({
-                'regist_hidden': true,
-                'login_hidden': true,
-                'my_hidden': false,
-                'user': res1.data.result
-              })
-            }
-            else {
-              the.setData({
-                'regist_hidden': true,
-                'login_hidden': false,
-                'my_hidden': true,
-                'user': {}
-              })
-            }
-          },
-          complete: function () {
+    if(app.data.user.id){
+      the.setData({
+        'login_hidden': true,
+        'my_hidden': false,
+        'user': app.data.user
+      })
+    }
+    else{
+      wx.getStorage({
+        key: '1_token',
+        success: function (res) {
+          wx.request({
+            url: app.data.checkUserId,
+            data: {
+              userId: res.data
+            },
+            success: function (res1) {
+              if (res1.data.code == 200) {
+                the.setData({
+                  'login_hidden': true,
+                  'my_hidden': false,
+                  'user': res1.data.result
+                })
+                app.data.user = res1.data.result;
+              }
+              else {
+                the.setData({
+                  'login_hidden': false,
+                  'my_hidden': true,
+                  'user': {}
+                })
+                app.data.user = {};
+              }
+            },
+            complete: function () {
 
-          }
-        })
-      },
-      fail:function(){
-        the.setData({
-          'regist_hidden':true,
-          'login_hidden':false,
-          'my_hidden': true,
-          'user': {}
-        })
-      }
-    })
+            }
+          })
+        },
+        fail: function () {
+          the.setData({
+            'login_hidden': false,
+            'my_hidden': true,
+            'user': {}
+          })
+          app.data.user = {};
+        }
+      })
+    }
   },
 
   /**
@@ -201,8 +209,8 @@ Page({
           the.setData({
             'user': res.data.result
           })
+          app.data.user = res.data.result;
           the.setData({
-            'regist_hidden': true,
             'login_hidden': true,
             'my_hidden': false
           })
@@ -240,10 +248,10 @@ Page({
             })
             the.setData({
               'user': res.data.result,
-              'regist_hidden': true,
               'login_hidden': true,
               'my_hidden': false
             })
+            app.data.user = res.data.result;
           }
           else {
             wx.showToast({
@@ -262,14 +270,12 @@ Page({
 
   to_regist:function(){
     this.setData({
-      'regist_hidden':false,
       'login_hidden':true
     })
   },
 
   to_login: function () {
     this.setData({
-      'regist_hidden': true,
       'login_hidden': false
     })
   },
@@ -289,12 +295,76 @@ Page({
           })
           the.setData({
             'user':{},
-            'regist_hidden': true,
             'login_hidden': false,
             'my_hidden': true
           })
+          app.data.user = {};
         } else if (res.cancel) {
         }
+      }
+    })
+  },
+  authFun: function (code, user, encryptedData,iv){
+    var the = this;
+    wx.request({
+      url: app.data.authUrl,
+      data:{
+        code: code,
+        user: JSON.stringify(user),
+        encryptedData: encryptedData,
+        iv: iv
+      },
+      success:function(res){
+        if(res.data.code==200){
+          wx.setStorage({
+            key: "1_token",
+            data: "pph_&"+res.data.result.unionId
+          })
+          the.setData({
+            'user': res.data.result,
+            'login_hidden': true,
+            'my_hidden': false
+          })
+          app.data.user = res.data.result;
+        }
+        else if (res.data.message){
+          wx.showModal({
+            title: '登录失败',
+            content: res.data.message,
+            showCancel: false,
+            success: function (res) {
+              if (res.confirm) {
+              } else if (res.cancel) {
+              }
+            }
+          })
+        }
+        else{
+          wx.showModal({
+            title: '登录失败',
+            content: "服务器异常",
+            showCancel: false,
+            success: function (res) {
+              if (res.confirm) {
+              } else if (res.cancel) {
+              }
+            }
+          })
+        }
+        the.weixinLoginFun(false)
+      },
+      fail:function(){
+        wx.showModal({
+          title: '登录失败',
+          content: '服务器异常',
+          showCancel: false,
+          success: function (res) {
+            if (res.confirm) {
+            } else if (res.cancel) {
+            }
+          }
+        })
+        the.weixinLoginFun(false)
       }
     })
   },
@@ -303,18 +373,96 @@ Page({
     var the = this;
     the.weixinLoginFun(true)
     wx.login({
-      success: function (res) {
-        console.log('success')
-        console.log('success')
-        console.log('success')
-        console.log('success')
-        console.log('success')
+      success: function (resLogin) {
+        wx.getUserInfo({
+          withCredentials: true,
+          success: function (res) {
+            the.authFun(resLogin.code, res.userInfo, res.encryptedData,res.iv)
+          },fail:function(){
+            wx.openSetting({
+              success: function (data) {
+                if (data) {
+                  if (data.authSetting["scope.userInfo"] == true) {
+                    wx.getUserInfo({
+                      withCredentials: true,
+                      success: function (data1) {
+                        the.authFun(resLogin.code, data1.userInfo, data1.encryptedData, data1.iv)
+                      },
+                      fail: function () {
+                        wx.showModal({
+                          title: '登录失败',
+                          content: '获取授权信息失败',
+                          showCancel: false,
+                          success: function (res) {
+                            if (res.confirm) {
+                            } else if (res.cancel) {
+                            }
+                          }
+                        })
+                        the.weixinLoginFun(false)
+                      }
+                    })
+                  }
+                  else{
+                    wx.showModal({
+                      title: '登录失败',
+                      content: '获取授权信息失败',
+                      showCancel: false,
+                      success: function (res) {
+                        if (res.confirm) {
+                        } else if (res.cancel) {
+                        }
+                      }
+                    })
+                    the.weixinLoginFun(false)
+                  }
+                }
+                else{
+                  wx.showModal({
+                    title: '登录失败',
+                    content: '获取授权信息失败',
+                    showCancel: false,
+                    success: function (res) {
+                      if (res.confirm) {
+                      } else if (res.cancel) {
+                      }
+                    }
+                  })
+                  the.weixinLoginFun(false)
+                }
+              },
+              fail:function(){
+                wx.showModal({
+                  title: '登录失败',
+                  content: '获取授权信息失败',
+                  showCancel: false,
+                  success: function (res) {
+                    if (res.confirm) {
+                    } else if (res.cancel) {
+                    }
+                  }
+                })
+                the.weixinLoginFun(false)
+              }
+            })
+          }
+        })
       },
       fail: function (res) {
-        
+        wx.showModal({
+          title: '登录失败',
+          content: '授权登录失败',
+          showCancel: false,
+          success: function (res) {
+            if (res.confirm) {
+            } else if (res.cancel) {
+            }
+          }
+        })
+        the.weixinLoginFun(false)
       },
       complete: function () {
-        the.weixinLoginFun(false)
+        
       }
     })
   }

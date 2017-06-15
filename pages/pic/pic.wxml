@@ -8,9 +8,9 @@ bindblur="searchBlur"/>
 <text class="none-text" style="display:{{noneTextDisplay}};">抱歉，您搜索的内容不存在~</text>
 
 <view class="top-view" style="display:{{viewDisplay}};" wx:for="{{pics}}">
-<image class="item" src="{{item.path1}}" mode="aspectFill" data-index="{{index}}" data-pa="1" bindtap="showPic"></image>
-<image class="item" src="{{item.path2}}" mode="aspectFill" data-index="{{index}}" data-pa="2"bindtap="showPic"></image>
-<image class="item" src="{{item.path3}}" mode="aspectFill" data-index="{{index}}" data-pa="3"bindtap="showPic"></image>
+<image class="item" src="{{item.path1}}" mode="aspectFill" data-index="{{index}}" data-pa="0" bindtap="showPic" bindlongtap="favoPic"></image>
+<image class="item" src="{{item.path2}}" mode="aspectFill" data-index="{{index}}" data-pa="1" bindtap="showPic" bindlongtap="favoPic"></image>
+<image class="item" src="{{item.path3}}" mode="aspectFill" data-index="{{index}}" data-pa="2" bindtap="showPic" bindlongtap="favoPic"></image>
 </view>
 
 <loading hidden="{{hidden}}">

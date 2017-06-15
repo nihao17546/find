@@ -8,14 +8,41 @@ App({
     registUrl:"http://127.0.0.1:8099/user/regist",
     checkUserId:"http://127.0.0.1:8099/user/check",
     loginUrl:"http://127.0.0.1:8099/user/login",
-    codeUrl:"http://127.0.0.1:8099/user/code"
+    authUrl:"http://127.0.0.1:8099/user/auth",
+    favoUrl:"http://127.0.0.1:8099/user/favo",
+    user: {}
   },
 
   /**
    * 当小程序初始化完成时，会触发 onLaunch（全局只触发一次）
    */
   onLaunch: function () {
-    
+    var the = this;
+    wx.getStorage({
+      key: '1_token',
+      success: function (res) {
+        wx.request({
+          url: the.data.checkUserId,
+          data: {
+            userId: res.data
+          },
+          success: function (res1) {
+            if (res1.data.code == 200) {
+              the.data.user = res1.data.result;
+            }
+            else {
+              the.data.user = {};
+            }
+          },
+          complete: function () {
+
+          }
+        })
+      },
+      fail: function () {
+        the.data.user = {};
+      }
+    })
   },
 
   /**

@@ -8,12 +8,14 @@ Page({
   data: {
     pics:[],
     pictures:[],
+    picIds:[],
     searchKey:'',
     page:1,
     display:'none',
     viewDisplay:'',
     noneTextDisplay:'none',
-    hidden:true
+    hidden:true,
+    openPic:true
   },
 
   getPics: function(callBack){
@@ -30,7 +32,7 @@ Page({
       },
       success: function (res) {
         var p1 = [], p2 = [], p3 = [], p = [];
-        var pp = [];
+        var pp = [], ids = [];
         for (var i = 0; i < res.data.length; i++) {
           if (i % 3 == 0) {
             p1.push(app.data.picCompressPrefix + res.data[i].path);
@@ -42,6 +44,7 @@ Page({
             p3.push(app.data.picCompressPrefix + res.data[i].path);
           }
           pp.push(app.data.picPrefix + res.data[i].path);
+          ids.push(res.data[i].id);
         }
         var len = Math.max(p1.length, p2.length, p3.length)
         for (var i = 0; i < len; i++) {
@@ -59,7 +62,8 @@ Page({
         }
         the.setData({
           pics: p,
-          pictures: pp
+          pictures: pp,
+          picIds: ids
         });
       },
       complete: function(){
@@ -98,6 +102,7 @@ Page({
               p3.push(app.data.picCompressPrefix + res.data.data[i].path);
             }
             pp.push(app.data.picPrefix + res.data.data[i].path);
+            ids.push(res.data.data[i].id);
           }
           var len = Math.max(p1.length, p2.length, p3.length)
           for (var i = 0; i < len; i++) {
@@ -115,9 +120,11 @@ Page({
           }
           var c = the.data.pics.concat(p);
           var cc = the.data.pictures.concat(pp);
+          var dd = the.data.picIds.concat(ids);
           the.setData({ 
             pics: c,
-            pictures: cc
+            pictures: cc,
+            picIds: dd
           });
         }
         else {
@@ -159,6 +166,7 @@ Page({
               p3.push(app.data.picCompressPrefix + res.data.data[i].path);
             }
             pp.push(app.data.picPrefix + res.data.data[i].path);
+            ids.push(res.data.data[i].id);
           }
           var len = Math.max(p1.length, p2.length, p3.length)
           for (var i = 0; i < len; i++) {
@@ -176,7 +184,8 @@ Page({
           }
           the.setData({ 
             pics: p,
-            pictures: pp
+            pictures: pp,
+            picIds: ids
           });
         }
         else{
@@ -294,15 +303,99 @@ Page({
     })
   },
   showPic:function(e){
-    var that = this,
-      index = parseInt(e.currentTarget.dataset.index),
-      pa = parseInt(e.currentTarget.dataset.pa),
-      pictures = this.data.pictures;
-      var ind;
-      ind = index * 3 + pa - 1;
-    wx.previewImage({
-      current: pictures[ind],
-      urls: pictures
+    if(this.data.openPic){
+      var index = parseInt(e.currentTarget.dataset.index),
+        pa = parseInt(e.currentTarget.dataset.pa),
+        pictures = this.data.pictures;
+      var ind = index * 3 + pa;
+      wx.previewImage({
+        current: pictures[ind],
+        urls: pictures
+      })
+    }
+  },
+  favoPic:function(e){
+    var the = this;
+    the.setData({
+      openPic:false
+    })
+    wx.showModal({
+      title: '收藏',
+      content: "确认收藏改图片？",
+      success: function (res) {
+        if (res.confirm) {
+          if (app.data.user.id){
+            var index = parseInt(e.currentTarget.dataset.index),
+              pa = parseInt(e.currentTarget.dataset.pa);
+            var ind = index * 3 + pa;
+            wx.request({
+              url: app.data.favoUrl,
+              data:{
+                uid: app.data.user.id,
+                picId: the.data.picIds[ind]
+              },
+              success:function(res1){
+                if (res1.data.code==200){
+                  wx.showToast({
+                    title: res1.data.message,
+                    icon: 'success',
+                    duration: 1100
+                  })
+                }
+                else{
+                  wx.showModal({
+                    title: '失败',
+                    content: "服务异常",
+                    showCancel: false,
+                    success: function (res) {
+                      if (res.confirm) {
+
+                      } else if (res.cancel) {
+
+                      }
+                    }
+                  })
+                }
+              },
+              fail:function(){
+                wx.showModal({
+                  title: '失败',
+                  content: "收藏失败",
+                  showCancel: false,
+                  success: function (res) {
+                    if (res.confirm) {
+
+                    } else if (res.cancel) {
+
+                    }
+                  }
+                })
+              }
+            })
+          }
+          else{
+            wx.showModal({
+              title: '您还未登录',
+              content: "请先跳转至[我的]选修卡进行登录操作。",
+              showCancel: false,
+              success: function (res) {
+                if (res.confirm) {
+                  
+                } else if (res.cancel) {
+                  
+                }
+              }
+            })
+          }
+          the.setData({
+            openPic: true
+          })
+        } else if (res.cancel) {
+          the.setData({
+            openPic: true
+          })
+        }
+      }
     })
   }
 })
