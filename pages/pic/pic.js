@@ -34,16 +34,24 @@ Page({
         var p1 = [], p2 = [], p3 = [], p = [];
         var pp = [], ids = [];
         for (var i = 0; i < res.data.length; i++) {
+          var cs;
+          var ss = res.data[i].src;
+          if (res.data[i].compressSrc){
+            cs = res.data[i].compressSrc;
+          }
+          else{
+            cs = res.data[i].src;
+          }
           if (i % 3 == 0) {
-            p1.push(app.data.picCompressPrefix + res.data[i].path);
+            p1.push(cs);
           }
           else if (i % 3 == 1) {
-            p2.push(app.data.picCompressPrefix + res.data[i].path);
+            p2.push(cs);
           }
           else {
-            p3.push(app.data.picCompressPrefix + res.data[i].path);
+            p3.push(cs);
           }
-          pp.push(app.data.picPrefix + res.data[i].path);
+          pp.push(ss);
           ids.push(res.data[i].id);
         }
         var len = Math.max(p1.length, p2.length, p3.length)
@@ -90,18 +98,18 @@ Page({
       success: function (res) {
         if (res.data.data.length>0){
           var p1 = [], p2 = [], p3 = [], p = [];
-          var pp = [];
+          var pp = [], ids = [];
           for (var i = 0; i < res.data.data.length; i++) {
             if (i % 3 == 0) {
-              p1.push(app.data.picCompressPrefix + res.data.data[i].path);
+              p1.push(res.data.data[i].compressSrc);
             }
             else if (i % 3 == 1) {
-              p2.push(app.data.picCompressPrefix + res.data.data[i].path);
+              p2.push(res.data.data[i].compressSrc);
             }
             else {
-              p3.push(app.data.picCompressPrefix + res.data.data[i].path);
+              p3.push(res.data.data[i].compressSrc);
             }
-            pp.push(app.data.picPrefix + res.data.data[i].path);
+            pp.push(res.data.data[i].src);
             ids.push(res.data.data[i].id);
           }
           var len = Math.max(p1.length, p2.length, p3.length)
@@ -154,18 +162,18 @@ Page({
       success: function (res) {
         if (res.data.data.length>0){
           var p1 = [], p2 = [], p3 = [], p = [];
-          var pp = [];
+          var pp = [], ids = [];
           for (var i = 0; i < res.data.data.length; i++) {
             if (i % 3 == 0) {
-              p1.push(app.data.picCompressPrefix + res.data.data[i].path);
+              p1.push(res.data.data[i].compressSrc);
             }
             else if (i % 3 == 1) {
-              p2.push(app.data.picCompressPrefix + res.data.data[i].path);
+              p2.push(res.data.data[i].compressSrc);
             }
             else {
-              p3.push(app.data.picCompressPrefix + res.data.data[i].path);
+              p3.push(res.data.data[i].compressSrc);
             }
-            pp.push(app.data.picPrefix + res.data.data[i].path);
+            pp.push(res.data.data[i].src);
             ids.push(res.data.data[i].id);
           }
           var len = Math.max(p1.length, p2.length, p3.length)
@@ -308,10 +316,12 @@ Page({
         pa = parseInt(e.currentTarget.dataset.pa),
         pictures = this.data.pictures;
       var ind = index * 3 + pa;
-      wx.previewImage({
-        current: pictures[ind],
-        urls: pictures
-      })
+      if (ind < pictures.length){
+        wx.previewImage({
+          current: pictures[ind],
+          urls: pictures
+        })
+      }
     }
   },
   favoPic:function(e){
@@ -321,9 +331,10 @@ Page({
     })
     wx.showModal({
       title: '收藏',
-      content: "确认收藏改图片？",
+      content: "确认收藏该图片？",
       success: function (res) {
         if (res.confirm) {
+          console.log(app.data.user)
           if (app.data.user.id){
             var index = parseInt(e.currentTarget.dataset.index),
               pa = parseInt(e.currentTarget.dataset.pa);
@@ -387,14 +398,27 @@ Page({
               }
             })
           }
-          the.setData({
-            openPic: true
-          })
         } else if (res.cancel) {
-          the.setData({
-            openPic: true
-          })
         }
+      },
+      complete:function(){
+        the.setData({
+          openPic: true
+        })
+      }
+    })
+  },
+  imgError:function(e){
+    var index = parseInt(e.currentTarget.dataset.index),
+      pa = parseInt(e.currentTarget.dataset.pa);
+    var picId = this.data.picIds[index * 3 + pa];
+    wx.request({
+      url: app.data.errorUrl,
+      data:{
+        picId:picId
+      },
+      success:function(res){
+
       }
     })
   }

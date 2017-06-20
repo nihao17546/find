@@ -1,15 +1,14 @@
 App({
 
   data:{
-    findUrl:"https://www.nihaov.com/find",
-    picCompressPrefix:"http://fdfs.nihaov.com/compress/250",
-    picPrefix: "http://fdfs.nihaov.com",
-    queryUrl:"https://www.nihaov.com/query/image/",
-    registUrl:"http://127.0.0.1:8099/user/regist",
-    checkUserId:"http://127.0.0.1:8099/user/check",
-    loginUrl:"http://127.0.0.1:8099/user/login",
-    authUrl:"http://127.0.0.1:8099/user/auth",
-    favoUrl:"http://127.0.0.1:8099/user/favo",
+    findUrl:"https://www.nihaov.com/random",
+    queryUrl:"https://www.nihaov.com/query/",
+    registUrl:"https://www.nihaov.com/user/regist",
+    checkUserId:"https://www.nihaov.com/user/check",
+    loginUrl:"https://www.nihaov.com/user/login",
+    authUrl:"https://www.nihaov.com/user/auth",
+    favoUrl:"https://www.nihaov.com/user/favo",
+    errorUrl: "https://www.nihaov.com/error",
     user: {}
   },
 
