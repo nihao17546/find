@@ -10,6 +10,7 @@ App({
     favoUrl:"https://www.nihaov.com/user/favo",
     errorUrl: "https://www.nihaov.com/error",
     errPic:"http://fdfs.nihaov.com/404.jpg",
+    ownFavoUrl:"http://127.0.0.1:8099/user/ownFavoLis",
     user: {}
   },
 

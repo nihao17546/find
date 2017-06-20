@@ -15,5 +15,14 @@
 <text bindtouchend="logout">退出</text>
 </view>
 </view>
-    该功能恢复中...
+    
+<view class="top-view" wx:for="{{pics}}">
+<image class="item" binderror="imgError" src="{{item.path1}}" mode="aspectFill" data-index="{{index}}" data-pa="0" bindtap="showPic"></image>
+<image class="item" binderror="imgError" src="{{item.path2}}" mode="aspectFill" data-index="{{index}}" data-pa="1" bindtap="showPic"></image>
+<image class="item" binderror="imgError" src="{{item.path3}}" mode="aspectFill" data-index="{{index}}" data-pa="2" bindtap="showPic"></image>
+</view>
+<loading hidden="{{hidden}}">
+  加载中...
+ </loading>
+
 </view>

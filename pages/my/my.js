@@ -12,7 +12,11 @@ Page({
     my_hidden:true,
     user:{},
     weixinBtn: false,
-    weixinBtnText: '微信登录'
+    weixinBtnText: '微信登录',
+    hidden: true,
+    pics: [],
+    pictures: [],
+    picIds: []
   },
 
   weixinLoginFun:function(re){
@@ -296,11 +300,35 @@ Page({
           the.setData({
             'user':{},
             'login_hidden': false,
-            'my_hidden': true
+            'my_hidden': true,
+            'pics':[],
+            'pictures':[],
+            'picIds':[]
           })
           app.data.user = {};
         } else if (res.cancel) {
         }
+      }
+    })
+  },
+  favoPicFun:function(uid,page){
+    var the = this;
+    the.setData({
+      'hidden': false
+    })
+    wx.request({
+      url: app.data.ownFavoUrl,
+      data: {
+        uid: uid,
+        page: page
+      },
+      success: function (res) {
+        
+      },
+      complete: function () {
+        the.setData({
+          'hidden': true
+        })
       }
     })
   },
@@ -326,6 +354,7 @@ Page({
             'my_hidden': false
           })
           app.data.user = res.data.result;
+
         }
         else if (res.data.message){
           wx.showModal({
@@ -463,6 +492,46 @@ Page({
       },
       complete: function () {
         
+      }
+    })
+  },
+  showPic: function (e) {
+    var index = parseInt(e.currentTarget.dataset.index),
+      pa = parseInt(e.currentTarget.dataset.pa),
+      pictures = this.data.pictures;
+    var ind = index * 3 + pa;
+    if (ind < pictures.length) {
+      wx.previewImage({
+        current: pictures[ind],
+        urls: pictures
+      })
+    }
+  },
+  imgError: function (e) {
+    var index = parseInt(e.currentTarget.dataset.index),
+      pa = parseInt(e.currentTarget.dataset.pa);
+    var pk;
+    if (pa == 0) {
+      pk = "pics[" + index + "].path1";
+    }
+    else if (pa == 1) {
+      pk = "pics[" + index + "].path2";
+    }
+    else {
+      pk = "pics[" + index + "].path3";
+    }
+    this.setData({
+      [pk]: app.data.errPic
+    })
+    var picId = this.data.picIds[index * 3 + pa];
+    wx.request({
+      url: app.data.errorUrl,
+      data: {
+        picId: picId,
+        errMsg: e.detail.errMsg
+      },
+      success: function (res) {
+
       }
     })
   }
