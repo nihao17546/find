@@ -9,6 +9,7 @@ App({
     authUrl:"https://www.nihaov.com/user/auth",
     favoUrl:"https://www.nihaov.com/user/favo",
     errorUrl: "https://www.nihaov.com/error",
+    errPic:"http://fdfs.nihaov.com/404.jpg",
     user: {}
   },
 
