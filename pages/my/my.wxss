@@ -43,10 +43,13 @@ margin-bottom: 30px;
   flex-wrap: wrap;
   justify-content: center;
 }
-.item{
-  flex:0 0 33.3%;
+.item-img{
+  flex:0 0 30%;
   height: 150px;
   margin: 2px;
+}
+.item{
+  flex:0 0 33.3%;
 }
 .head_pic{
   width: 70px;
@@ -78,5 +81,48 @@ margin-bottom: 10px;
 margin-top: 50px;
 }
 .text_other_show{
+  font-size: 15px;
+}
+.myfavo-text{
+  margin-left: 15px;
+  margin-top: 8px;
+  margin-bottom: 3px;
+  font-size: 14px;
+  color: gray;
+  background-color: white;
+}
+.nofavo-text{
+  width: 100%;
+  height: 200px;
+  text-align: center;
+  font-size: 16px;
+  color: gray;
+  padding-top: 20px;
+}
+.page-btn{
+  margin-top: 5px;
+  margin-bottom: 15px;
+  text-align: center;
+}
+.my_class{
+  background-color: white;
+}
+.suggestion{
+  margin-bottom: 20px;
+  margin-top: 5px;
+  font-size: 12px;
+  width: 100%;
+  text-align: center;
+}
+.textarea_content{
+  border: 1px solid gray;
+  border-radius: 5px;
+  font-size: 15px;
+  padding: 5px;
+  margin-bottom: 5px;
+}
+.sugg_btn{
+  margin-top: 5px;
+  height: 35px;
   font-size: 15px;
 }

@@ -334,7 +334,6 @@ Page({
       content: "确认收藏该图片？",
       success: function (res) {
         if (res.confirm) {
-          console.log(app.data.user)
           if (app.data.user.id){
             var index = parseInt(e.currentTarget.dataset.index),
               pa = parseInt(e.currentTarget.dataset.pa);
@@ -352,6 +351,7 @@ Page({
                     icon: 'success',
                     duration: 1100
                   })
+                  app.data.reloadFavo = true;
                 }
                 else{
                   wx.showModal({
@@ -387,7 +387,7 @@ Page({
           else{
             wx.showModal({
               title: '您还未登录',
-              content: "请先跳转至[我的]选修卡进行登录操作。",
+              content: "请先跳转至[我的]选项卡进行登录操作。",
               showCancel: false,
               success: function (res) {
                 if (res.confirm) {

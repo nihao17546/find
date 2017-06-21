@@ -1,11 +1,12 @@
-<view class="both_class" hidden="{{login_hidden}}">
+<view class="both_class" hidden="{{login_hidden}}" style="display:{{hidden_all}}">
 <view class="text_show_view">
     <text class="text_show">---登录后体验更多功能---</text>
 </view>
     <button type="primary" formType="reset" bindtap="to_author" disabled="{{weixinBtn}}">{{weixinBtnText}}</button>
 </view>
 
-<view class="my_class" hidden="{{my_hidden}}">
+<view class="my_class" hidden="{{my_hidden}}" style="display:{{hidden_all}}">
+
 <view class="my_head_back">
 <view class="item head_pic_item">
 <image class="head_pic" src="{{user.headPic}}"></image>
@@ -15,14 +16,42 @@
 <text bindtouchend="logout">退出</text>
 </view>
 </view>
-    
-<view class="top-view" wx:for="{{pics}}">
-<image class="item" binderror="imgError" src="{{item.path1}}" mode="aspectFill" data-index="{{index}}" data-pa="0" bindtap="showPic"></image>
-<image class="item" binderror="imgError" src="{{item.path2}}" mode="aspectFill" data-index="{{index}}" data-pa="1" bindtap="showPic"></image>
-<image class="item" binderror="imgError" src="{{item.path3}}" mode="aspectFill" data-index="{{index}}" data-pa="2" bindtap="showPic"></image>
+
+<view class="myfavo-text">我的收藏</view>
+<view class="nofavo-text" hidden="{{nofavo_hidden}}">
+<view>您还没有收藏哦～</view>
+<view style="font-size:12px;margin-top:10px;">小提示:长按图片收藏。</view>
 </view>
+<view class="top-view" wx:for="{{pics}}" bindtouchstart = "touchtart" bindtouchend = "touchend" bindtouchmove="touchmove">
+<image class="item-img" binderror="imgError" src="{{item.path1}}" mode="aspectFill" data-index="{{index}}" data-pa="0" bindtap="showPic" bindlongtap="rmFavo"></image>
+<image class="item-img" binderror="imgError" src="{{item.path2}}" mode="aspectFill" data-index="{{index}}" data-pa="1" bindtap="showPic" bindlongtap="rmFavo"></image>
+<image class="item-img" binderror="imgError" src="{{item.path3}}" mode="aspectFill" data-index="{{index}}" data-pa="2" bindtap="showPic" bindlongtap="rmFavo"></image>
+</view>
+<view class="page-btn" hidden="{{pagebtn_hidden}}">
+<button class="p-btn" size="mini" bindtap="pageFirst">首页</button>
+<button class="p-btn" size="mini" bindtap="pagePrev">⇦</button>
+<button class="p-btn" size="mini" disabled="true">{{currentPage}}/{{pageSize}}</button>
+<button class="p-btn" size="mini" bindtap="pageNext">⇨</button>
+<button class="p-btn" size="mini" bindtap="pageLast">尾页</button>
+</view>
+
 <loading hidden="{{hidden}}">
   加载中...
  </loading>
 
+</view>
+<view class="suggestion" bindtap="showSuggestion" style="display:{{hidden_all}}">意见反馈</view>
+
+<view class="suggestion_view both_class" hidden="{{hidden_suggestion}}">
+<view class="text_show_view">
+    <text class="text_show">---意见反馈---</text>
+</view>
+<view class="text_show_view">
+  <form bindsubmit="suggestionSubmit">
+    <textarea class="textarea_content" placeholder="反馈内容" value="{{default_content}}" name="content" maxlength="1000"/>
+    <input class="textarea_content" placeholder="微信号" name="wxid" value="{{default_content}}"/>
+    <button class="sugg_btn" form-type="submit" type="primary"> 提交 </button>
+    <button class="sugg_btn" bindtap="cancelSuggestion"> 取消 </button>
+  </form>
+</view>
 </view>
