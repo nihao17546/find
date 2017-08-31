@@ -1,0 +1,23 @@
+<view class="tou_view">
+<image class="tou" src="{{defaultPic}}" bindtap="showLook"></image>
+<button hidden="{{b_pic_hidden}}" bindtap="choose_pic">选择照片</button>
+<form bindsubmit="add_word">
+<input hidden="{{a_word_hidden}}" value="{{word_value}}" name="word" class="word_input" placeholder-class="word_input_p" placeholder="在这里输入要添加的文字" type="text"/>
+<radio-group hidden="{{a_word_hidden}}" name="color">
+  <label class="checkbox">
+    <radio value="#000000" checked="true"/><text style="color: #000000;">黑色</text>
+    <radio value="#DC143C"/><text style="color: #DC143C;">红色</text>
+    <radio value="#FFFFFF"/><text style="color: #FFFFFF;">白色</text>
+  </label>
+</radio-group>
+<input hidden="{{a_word_hidden}}" value="{{word_value}}" name="pos" class="word_input" placeholder-class="word_input_p" placeholder="文字展示的位置(九宫格1-9)" type="number" maxlength="1"/>
+<input hidden="{{a_word_hidden}}" value="{{word_value}}" name="size" class="word_input" placeholder-class="word_input_p" placeholder="文字大小" type="number" maxlength="2"/>
+<radio-group hidden="{{a_word_hidden}}" name="type">
+  <label class="checkbox">
+    <radio value="0" checked="true"/><text>正常文字</text>
+    <radio value="1"/><text>文字跳动</text>
+  </label>
+</radio-group>
+<button hidden="{{a_word_hidden}}" form-type="submit">添加文字</button>
+</form>
+</view>

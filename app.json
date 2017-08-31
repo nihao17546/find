@@ -1,7 +1,8 @@
 {
   "pages": [
     "pages/pic/pic",
-    "pages/my/my"
+    "pages/my/my",
+    "pages/look/look"
   ],
   "window": {
     "navigationBarTitleText": "FIND",
@@ -13,8 +14,10 @@
       {
         "pagePath": "pages/pic/pic",
         "text": "发现"
-      },
-      {
+      },{
+        "pagePath": "pages/look/look",
+        "text": "表情"
+      },{
         "pagePath": "pages/my/my",
         "text": "我的"
       }
