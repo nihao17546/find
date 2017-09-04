@@ -11,7 +11,8 @@ Page({
     b_pic_hidden: false,
     a_word_hidden: true,
     canvas_hidden: true,
-    word_value: ""
+    word_value: "",
+    btn_word: "选择照片"
   },
 
   /**
@@ -39,12 +40,7 @@ Page({
    * 生命周期函数--监听页面隐藏
    */
   onHide: function () {
-    this.setData({
-      defaultPic: "http://fdfs.nihaov.com/tou.png",
-      b_pic_hidden: false,
-      a_word_hidden: true,
-      word_value: ""
-    })
+    
   },
 
   /**
@@ -77,17 +73,29 @@ Page({
 
   choose_pic: function () {
     var the = this;
-    wx.chooseImage({
-      count: 1,
-      sizeType: ["compressed"],
-      success: function(res) {
-        the.setData({
-          b_pic_hidden: true,
-          a_word_hidden: false,
-          defaultPic: res.tempFilePaths[0]
-        })
-      },
-    })
+    if(the.data.btn_word == '选择照片'){
+      wx.chooseImage({
+        count: 1,
+        sizeType: ["compressed"],
+        success: function (res) {
+          the.setData({
+            b_pic_hidden: true,
+            a_word_hidden: false,
+            defaultPic: res.tempFilePaths[0]
+          })
+        },
+      })
+    }
+    else{
+      the.setData({
+        defaultPic: "http://fdfs.nihaov.com/tou.png",
+        b_pic_hidden: false,
+        a_word_hidden: true,
+        repeat_hidden: true,
+        btn_word: "选择照片",
+        word_value: ""
+      })
+    }
   },
 
   showLook: function(){
@@ -107,6 +115,9 @@ Page({
     var the = this;
     var word = e.detail.value.word.trim();
     var color = e.detail.value.color;
+    var pos = e.detail.value.pos;
+    var size = e.detail.value.size;
+    var type = e.detail.value.type;
     if (word != ''){
       wx.uploadFile({
         url: app.data.uploadUrl,
@@ -114,17 +125,22 @@ Page({
         name: 'file',
         formData: {
           word: word,
-          pos: 1,
-          size: 22,
+          pos: pos,
+          size: size,
           color: color,
           family: '黑体',
-          type: 1
+          type: type
         },
         success: function (res) {
           var da = JSON.parse(res.data);
           if (da.code == 200){
             the.setData({
-              defaultPic: 'http://fdfs.nihaov.com/compress/250/20170410/8/1491783647917.jpg'
+              defaultPic: da.result,
+              btn_word: "重新制作",
+              b_pic_hidden: false,
+              a_word_hidden: true,
+              repeat_hidden: true,
+              word_value: ""
             })
             wx.hideLoading()
           }
