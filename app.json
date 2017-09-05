@@ -22,9 +22,9 @@
         "text": "我的"
       }
     ],
-    "selectedColor": "#CD5C5C",
-    "backgroundColor":"white",
-    "position": "top",
+    "selectedColor": "white",
+    "backgroundColor":"black",
+    "position": "bottom",
     "borderStyle": "black"
   },
   "networkTimeout": {
