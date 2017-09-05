@@ -13,7 +13,7 @@ App({
     ownFavoUrl: "https://www.nihaov.com/user/ownFavoList",
     rmFavoUrl: "https://www.nihaov.com/user/rmFavo",
     suggestionUrl: "https://www.nihaov.com/user/suggestion",
-    uploadUrl: "https://www.nihaov.com/upload/look",
+    uploadUrl: "https://www.nihaov.com/upload/look/",
     user: {},
     reloadFavo: false
   },

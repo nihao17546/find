@@ -12,7 +12,8 @@ Page({
     a_word_hidden: true,
     canvas_hidden: true,
     word_value: "",
-    btn_word: "选择照片"
+    btn_word: "选择照片",
+    user: {}
   },
 
   /**
@@ -26,7 +27,48 @@ Page({
    * 生命周期函数--监听页面初次渲染完成
    */
   onReady: function () {
-  
+    var the = this;
+    if (app.data.user && app.data.user.id) {
+      the.setData({
+        'user': app.data.user
+      })
+    }
+    else {
+      wx.getStorage({
+        key: '1_token',
+        success: function (res) {
+          wx.request({
+            url: app.data.checkUserId,
+            data: {
+              userId: res.data
+            },
+            success: function (res1) {
+              if (res1.data.code == 200) {
+                the.setData({
+                  'user': res1.data.result
+                })
+                app.data.user = res1.data.result;
+              }
+              else {
+                the.setData({
+                  'user': {}
+                })
+                app.data.user = {};
+              }
+            },
+            complete: function () {
+
+            }
+          })
+        },
+        fail: function () {
+          the.setData({
+            'user': {}
+          })
+          app.data.user = {};
+        }
+      })
+    }
   },
 
   /**
@@ -73,28 +115,33 @@ Page({
 
   choose_pic: function () {
     var the = this;
-    if(the.data.btn_word == '选择照片'){
-      wx.chooseImage({
-        count: 1,
-        sizeType: ["compressed"],
-        success: function (res) {
-          the.setData({
-            b_pic_hidden: true,
-            a_word_hidden: false,
-            defaultPic: res.tempFilePaths[0]
-          })
-        },
-      })
+    if (the.data.user && the.data.user.id){
+      if (the.data.btn_word == '选择照片') {
+        wx.chooseImage({
+          count: 1,
+          sizeType: ["compressed"],
+          success: function (res) {
+            the.setData({
+              b_pic_hidden: true,
+              a_word_hidden: false,
+              defaultPic: res.tempFilePaths[0]
+            })
+          },
+        })
+      }
+      else {
+        the.setData({
+          defaultPic: "http://fdfs.nihaov.com/tou.png",
+          b_pic_hidden: false,
+          a_word_hidden: true,
+          repeat_hidden: true,
+          btn_word: "选择照片",
+          word_value: ""
+        })
+      }
     }
     else{
-      the.setData({
-        defaultPic: "http://fdfs.nihaov.com/tou.png",
-        b_pic_hidden: false,
-        a_word_hidden: true,
-        repeat_hidden: true,
-        btn_word: "选择照片",
-        word_value: ""
-      })
+      the.to_author()
     }
   },
 
@@ -107,11 +154,18 @@ Page({
     }
   },
 
-  add_word: function (e) {
-    wx.showLoading({
-      title: '处理中',
-      mask: true
+  cancel: function(){
+    this.setData({
+      defaultPic: "http://fdfs.nihaov.com/tou.png",
+      b_pic_hidden: false,
+      a_word_hidden: true,
+      repeat_hidden: true,
+      btn_word: "选择照片",
+      word_value: ""
     })
+  },
+
+  add_word: function (e) {
     var the = this;
     var word = e.detail.value.word.trim();
     var color = e.detail.value.color;
@@ -119,17 +173,21 @@ Page({
     var size = e.detail.value.size;
     var type = e.detail.value.type;
     if (word != ''){
+      wx.showLoading({
+        title: '处理中',
+        mask: true
+      })
       wx.uploadFile({
-        url: app.data.uploadUrl,
+        url: app.data.uploadUrl + encodeURI(word),
         filePath: the.data.defaultPic,
         name: 'file',
         formData: {
-          word: word,
           pos: pos,
           size: size,
           color: color,
           family: '黑体',
-          type: type
+          type: type,
+          uid: the.data.user.id
         },
         success: function (res) {
           var da = JSON.parse(res.data);
@@ -142,7 +200,11 @@ Page({
               repeat_hidden: true,
               word_value: ""
             })
-            wx.hideLoading()
+            wx.hideLoading();
+            wx.previewImage({
+              urls: [the.data.defaultPic]
+            })
+            app.data.reloadFavo = true;
           }
           else{
             wx.hideLoading()
@@ -181,5 +243,166 @@ Page({
         }
       })
     }
+    else{
+      wx.showToast({
+        title: '请输入需要添加的文字',
+        icon: 'success',
+        duration: 1100
+      })
+    }
+  },
+
+  authFun: function (code, user, encryptedData, iv) {
+    var the = this;
+    wx.request({
+      url: app.data.authUrl,
+      data: {
+        code: code,
+        user: JSON.stringify(user),
+        encryptedData: encryptedData,
+        iv: iv
+      },
+      success: function (res) {
+        if (res.data.code == 200) {
+          wx.setStorage({
+            key: "1_token",
+            data: "pph_&" + res.data.result.unionId
+          })
+          the.setData({
+            'user': res.data.result
+          })
+          app.data.user = res.data.result;
+          the.choose_pic()
+        }
+        else if (res.data.message) {
+          wx.showModal({
+            title: '登录失败',
+            content: res.data.message,
+            showCancel: false,
+            success: function (res) {
+              if (res.confirm) {
+              } else if (res.cancel) {
+              }
+            }
+          })
+        }
+        else {
+          wx.showModal({
+            title: '登录失败',
+            content: "服务器异常",
+            showCancel: false,
+            success: function (res) {
+              if (res.confirm) {
+              } else if (res.cancel) {
+              }
+            }
+          })
+        }
+      },
+      fail: function () {
+        wx.showModal({
+          title: '登录失败',
+          content: '服务器异常',
+          showCancel: false,
+          success: function (res) {
+            if (res.confirm) {
+            } else if (res.cancel) {
+            }
+          }
+        })
+      }
+    })
+  },
+
+  to_author: function () {
+    var the = this;
+    wx.login({
+      success: function (resLogin) {
+        wx.getUserInfo({
+          withCredentials: true,
+          success: function (res) {
+            the.authFun(resLogin.code, res.userInfo, res.encryptedData, res.iv)
+          }, fail: function () {
+            wx.openSetting({
+              success: function (data) {
+                if (data) {
+                  if (data.authSetting["scope.userInfo"] == true) {
+                    wx.getUserInfo({
+                      withCredentials: true,
+                      success: function (data1) {
+                        the.authFun(resLogin.code, data1.userInfo, data1.encryptedData, data1.iv)
+                      },
+                      fail: function () {
+                        wx.showModal({
+                          title: '登录失败',
+                          content: '获取授权信息失败',
+                          showCancel: false,
+                          success: function (res) {
+                            if (res.confirm) {
+                            } else if (res.cancel) {
+                            }
+                          }
+                        })
+                      }
+                    })
+                  }
+                  else {
+                    wx.showModal({
+                      title: '登录失败',
+                      content: '获取授权信息失败',
+                      showCancel: false,
+                      success: function (res) {
+                        if (res.confirm) {
+                        } else if (res.cancel) {
+                        }
+                      }
+                    })
+                  }
+                }
+                else {
+                  wx.showModal({
+                    title: '登录失败',
+                    content: '获取授权信息失败',
+                    showCancel: false,
+                    success: function (res) {
+                      if (res.confirm) {
+                      } else if (res.cancel) {
+                      }
+                    }
+                  })
+                }
+              },
+              fail: function () {
+                wx.showModal({
+                  title: '登录失败',
+                  content: '获取授权信息失败',
+                  showCancel: false,
+                  success: function (res) {
+                    if (res.confirm) {
+                    } else if (res.cancel) {
+                    }
+                  }
+                })
+              }
+            })
+          }
+        })
+      },
+      fail: function (res) {
+        wx.showModal({
+          title: '登录失败',
+          content: '授权登录失败',
+          showCancel: false,
+          success: function (res) {
+            if (res.confirm) {
+            } else if (res.cancel) {
+            }
+          }
+        })
+      },
+      complete: function () {
+
+      }
+    })
   }
 })

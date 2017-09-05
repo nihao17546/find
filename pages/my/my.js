@@ -12,7 +12,7 @@ Page({
     my_hidden:true,
     user:{},
     weixinBtn: false,
-    weixinBtnText: '微信登录',
+    weixinBtnText: '微信授权登录',
     hidden: true,
     pics: [],
     pictures: [],

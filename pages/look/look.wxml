@@ -8,8 +8,8 @@
 <view class="cc">选择字体颜色:</view>
 <radio-group name="color">
   <label class="checkbox">
-    <radio value="#000000" checked="true"/><text style="color: #000000;">黑色</text>
-    <radio value="#DC143C"/><text style="color: #DC143C;">红色</text>
+    <radio value="#000000" checked="true"/><text style="color: #000000;">黑色</text>,
+    <radio value="#DC143C"/><text style="color: #DC143C;">红色</text>,
     <radio value="#FFFFFF"/><text style="color: #FFFFFF;">白色</text>
   </label>
 </radio-group>
@@ -19,10 +19,10 @@
 <view class="cc">选择文字所在位置:</view>
 <radio-group name="pos">
   <label class="checkbox">
-    <radio value="2" checked="true"/><text>上</text>
-    <radio value="5"/><text>中</text>
-    <radio value="8"/><text>下</text>
-    <radio value="4"/><text>左</text>
+    <radio value="2"/><text>上</text>,
+    <radio value="5" checked="true"/><text>中</text>,
+    <radio value="8"/><text>下</text>,
+    <radio value="4"/><text>左</text>,
     <radio value="6"/><text>右</text>
   </label>
 </radio-group>
@@ -32,8 +32,8 @@
 <view class="cc">选择字体大小:</view>
 <radio-group name="size">
   <label class="checkbox">
-    <radio value="20" checked="true"/><text>小</text>
-    <radio value="30"/><text>中</text>
+    <radio value="28"/><text>小</text>,
+    <radio value="38" checked="true"/><text>中</text>,
     <radio value="50"/><text>大</text>
   </label>
 </radio-group>
@@ -43,12 +43,13 @@
 <view class="cc">选择字体模式:</view>
 <radio-group name="type">
   <label class="checkbox">
-    <radio value="1" checked="true"/><text>正常文字</text>
+    <radio value="1" checked="true"/><text>正常文字</text>,
     <radio value="0"/><text>文字跳动</text>
   </label>
 </radio-group>
 </view>
 
-<button class="btn" hidden="{{a_word_hidden}}" form-type="submit">添加文字</button>
+<button class="btn" type="primary" hidden="{{a_word_hidden}}" form-type="submit">点击生成表情</button>
+<button class="btn" hidden="{{a_word_hidden}}" bindtap="cancel">取消</button>
 </form>
 </view>
