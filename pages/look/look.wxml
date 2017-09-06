@@ -54,6 +54,6 @@
 </form>
 
 <view class="text_show_view" hidden="{{b_pic_hidden}}">
-    <text class="text_show" bindtap="help">---使用帮助---</text>
+    <text class="text_show" bindtap="help">------查看使用帮助------</text>
 </view>
 </view>

@@ -5,7 +5,7 @@ Page({
    * 页面的初始数据
    */
   data: {
-  
+    help_src: ""
   },
 
   /**
@@ -19,7 +19,33 @@ Page({
    * 生命周期函数--监听页面初次渲染完成
    */
   onReady: function () {
-  
+    var the = this;
+    wx.request({
+      url: the.data.getHelpSrcUrl,
+      data: {
+        
+      },
+      success: function (res) {
+        if (res.data.code == 200) {
+          the.setData({
+            help_src: res.data.result
+          })
+        }
+        else {
+          the.setData({
+            help_src: "http://ovstg74bg.bkt.clouddn.com/help1.png"
+          })
+        }
+      },
+      fail: function(){
+        the.setData({
+          help_src: "http://ovstg74bg.bkt.clouddn.com/help1.png"
+        })
+      },
+      complete: function () {
+
+      }
+    })
   },
 
   /**

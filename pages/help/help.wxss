@@ -1,7 +1,7 @@
 /* pages/help/help.wxss */
 .vimg{
-  width: 95%;
-  border: 2px solid black;
+  width: 98%;
+  border: 1px solid gray;
 }
 .vi{
   margin-bottom: 5px;
@@ -13,4 +13,10 @@
   margin-left: 5px;
   margin-right: 5px;
   margin-bottom: 5px;
+}
+.back_text{
+  margin-left: 5px;
+  margin-top: 15px;
+  font-size: 15px;
+  width: 100%;
 }

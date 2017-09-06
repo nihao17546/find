@@ -14,6 +14,7 @@ App({
     rmFavoUrl: "https://www.nihaov.com/user/rmFavo",
     suggestionUrl: "https://www.nihaov.com/user/suggestion",
     uploadUrl: "https://www.nihaov.com/upload/look",
+    getHelpSrcUrl: "https://www.nihaov.com/getHelpSrc",
     user: {},
     reloadFavo: false
   },
