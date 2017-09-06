@@ -13,6 +13,7 @@ Page({
     canvas_hidden: true,
     word_value: "",
     btn_word: "选择照片",
+    help_src: "http://ovstg74bg.bkt.clouddn.com/help1.png",
     user: {}
   },
 
@@ -27,6 +28,25 @@ Page({
    * 生命周期函数--监听页面初次渲染完成
    */
   onReady: function () {
+    var the = this;
+    wx.request({
+      url: app.data.getHelpSrcUrl,
+      data: {
+
+      },
+      success: function (res) {
+        if (res.data.code == 200) {
+          the.setData({
+            help_src: res.data.result
+          })
+        }
+      },
+      fail: function () {
+      },
+      complete: function () {
+
+      }
+    })
     // var the = this;
     // if (app.data.user && app.data.user.id) {
     //   the.setData({
@@ -447,8 +467,11 @@ Page({
   },
 
   help: function() {
-    wx.redirectTo({
-      url: "/pages/help/help"
+    // wx.redirectTo({
+    //   url: "/pages/help/help"
+    // })
+    wx.previewImage({
+      urls: [this.data.help_src]
     })
   }
 })

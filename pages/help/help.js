@@ -1,4 +1,5 @@
 // pages/help/help.js
+var app = getApp()
 Page({
 
   /**
@@ -21,7 +22,7 @@ Page({
   onReady: function () {
     var the = this;
     wx.request({
-      url: the.data.getHelpSrcUrl,
+      url: app.data.getHelpSrcUrl,
       data: {
         
       },
