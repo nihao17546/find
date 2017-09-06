@@ -23,11 +23,11 @@
         "text": "我的"
       }
     ],
-    "color": "white",
+    "color": "gray",
     "selectedColor": "#CD5C5C",
-    "backgroundColor":"black",
+    "backgroundColor":"white",
     "position": "bottom",
-    "borderStyle": "white"
+    "borderStyle": "black"
   },
   "networkTimeout": {
     "request": 10000,
