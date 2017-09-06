@@ -1,0 +1,16 @@
+/* pages/help/help.wxss */
+.vimg{
+  width: 95%;
+  border: 2px solid black;
+}
+.vi{
+  margin-bottom: 5px;
+  margin-top: 5px;
+  text-align: center;
+}
+.btn{
+  margin-top: 2px;
+  margin-left: 5px;
+  margin-right: 5px;
+  margin-bottom: 5px;
+}

@@ -387,11 +387,12 @@ Page({
           else{
             wx.showModal({
               title: '您还未登录',
-              content: "请先跳转至[我的]选项卡进行登录操作。",
-              showCancel: false,
+              content: "请先跳转至[我的]页面进行登录操作。",
               success: function (res) {
                 if (res.confirm) {
-                  
+                  wx.switchTab({
+                    url: '/pages/my/my'
+                  })
                 } else if (res.cancel) {
                   
                 }

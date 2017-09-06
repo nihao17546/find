@@ -6,7 +6,7 @@ Page({
    * 页面的初始数据
    */
   data: {
-    defaultPic: "http://fdfs.nihaov.com/tou.png",
+    defaultPic: "http://ovstg74bg.bkt.clouddn.com/tou.png",
     image_hidden: false,
     b_pic_hidden: false,
     a_word_hidden: true,
@@ -27,55 +27,64 @@ Page({
    * 生命周期函数--监听页面初次渲染完成
    */
   onReady: function () {
-    var the = this;
-    if (app.data.user && app.data.user.id) {
-      the.setData({
-        'user': app.data.user
-      })
-    }
-    else {
-      wx.getStorage({
-        key: '1_token',
-        success: function (res) {
-          wx.request({
-            url: app.data.checkUserId,
-            data: {
-              userId: res.data
-            },
-            success: function (res1) {
-              if (res1.data.code == 200) {
-                the.setData({
-                  'user': res1.data.result
-                })
-                app.data.user = res1.data.result;
-              }
-              else {
-                the.setData({
-                  'user': {}
-                })
-                app.data.user = {};
-              }
-            },
-            complete: function () {
+    // var the = this;
+    // if (app.data.user && app.data.user.id) {
+    //   the.setData({
+    //     'user': app.data.user
+    //   })
+    // }
+    // else {
+    //   wx.getStorage({
+    //     key: '1_token',
+    //     success: function (res) {
+    //       wx.request({
+    //         url: app.data.checkUserId,
+    //         data: {
+    //           userId: res.data
+    //         },
+    //         success: function (res1) {
+    //           if (res1.data.code == 200) {
+    //             the.setData({
+    //               'user': res1.data.result
+    //             })
+    //             app.data.user = res1.data.result;
+    //           }
+    //           else {
+    //             the.setData({
+    //               'user': {}
+    //             })
+    //             app.data.user = {};
+    //           }
+    //         },
+    //         complete: function () {
 
-            }
-          })
-        },
-        fail: function () {
-          the.setData({
-            'user': {}
-          })
-          app.data.user = {};
-        }
-      })
-    }
+    //         }
+    //       })
+    //     },
+    //     fail: function () {
+    //       the.setData({
+    //         'user': {}
+    //       })
+    //       app.data.user = {};
+    //     }
+    //   })
+    // }
   },
 
   /**
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
-  
+    if(app.data.user && app.data.user.id){
+      this.setData({
+        user: app.data.user
+      })
+    }
+    else{
+      this.setData({
+        user: {}
+      })
+    }
   },
 
   /**
@@ -119,7 +128,8 @@ Page({
       if (the.data.btn_word == '选择照片') {
         wx.chooseImage({
           count: 1,
-          sizeType: ["compressed"],
+          sizeType: ['original', 'compressed'], // 可以指定是原图还是压缩图，默认二者都有
+          sourceType: ['album', 'camera'], // 可以指定来源是相册还是相机，默认二者都有
           success: function (res) {
             the.setData({
               b_pic_hidden: true,
@@ -131,7 +141,7 @@ Page({
       }
       else {
         the.setData({
-          defaultPic: "http://fdfs.nihaov.com/tou.png",
+          defaultPic: "http://ovstg74bg.bkt.clouddn.com/tou.png",
           b_pic_hidden: false,
           a_word_hidden: true,
           repeat_hidden: true,
@@ -141,13 +151,26 @@ Page({
       }
     }
     else{
-      the.to_author()
+      // the.to_author()
+      wx.showModal({
+        title: '您还未登录',
+        content: "请先跳转至[我的]页面进行登录操作。",
+        success: function (res) {
+          if (res.confirm) {
+            wx.switchTab({
+              url: '/pages/my/my'
+            });
+          } else if (res.cancel) {
+
+          }
+        }
+      })
     }
   },
 
   showLook: function(){
     var the = this;
-    if (the.data.defaultPic != 'http://fdfs.nihaov.com/tou.png'){
+    if (the.data.defaultPic != 'http://ovstg74bg.bkt.clouddn.com/tou.png'){
       wx.previewImage({
         urls: [the.data.defaultPic]
       })
@@ -156,7 +179,7 @@ Page({
 
   cancel: function(){
     this.setData({
-      defaultPic: "http://fdfs.nihaov.com/tou.png",
+      defaultPic: "http://ovstg74bg.bkt.clouddn.com/tou.png",
       b_pic_hidden: false,
       a_word_hidden: true,
       repeat_hidden: true,
@@ -167,6 +190,22 @@ Page({
 
   add_word: function (e) {
     var the = this;
+    if (!(the.data.user && the.data.user.id)) {
+      wx.showModal({
+        title: '您还未登录',
+        content: "请先跳转至[我的]页面进行登录操作。",
+        success: function (res) {
+          if (res.confirm) {
+            wx.switchTab({
+              url: '/pages/my/my'
+            });
+          } else if (res.cancel) {
+
+          }
+        }
+      })
+      return;
+    }
     var word = e.detail.value.word.trim();
     var color = e.detail.value.color;
     var pos = e.detail.value.pos;
@@ -178,14 +217,15 @@ Page({
         mask: true
       })
       wx.uploadFile({
-        url: app.data.uploadUrl + encodeURI(word),
+        url: app.data.uploadUrl,
         filePath: the.data.defaultPic,
         name: 'file',
         formData: {
+          word: word,
           pos: pos,
           size: size,
           color: color,
-          family: '黑体',
+          family: '宋体',
           type: type,
           uid: the.data.user.id
         },
@@ -403,6 +443,12 @@ Page({
       complete: function () {
 
       }
+    })
+  },
+
+  help: function() {
+    wx.redirectTo({
+      url: "/pages/help/help"
     })
   }
 })

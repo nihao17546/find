@@ -2,7 +2,8 @@
   "pages": [
     "pages/pic/pic",
     "pages/my/my",
-    "pages/look/look"
+    "pages/look/look",
+    "pages/help/help"
   ],
   "window": {
     "navigationBarTitleText": "FIND",
@@ -16,16 +17,17 @@
         "text": "发现"
       },{
         "pagePath": "pages/look/look",
-        "text": "表情"
+        "text": "表情制作"
       },{
         "pagePath": "pages/my/my",
         "text": "我的"
       }
     ],
-    "selectedColor": "white",
+    "color": "white",
+    "selectedColor": "#CD5C5C",
     "backgroundColor":"black",
     "position": "bottom",
-    "borderStyle": "black"
+    "borderStyle": "white"
   },
   "networkTimeout": {
     "request": 10000,

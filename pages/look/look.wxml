@@ -1,5 +1,5 @@
 <view class="tou_view">
-<image class="tou" src="{{defaultPic}}" bindtap="showLook"></image>
+<image class="tou" mode="widthFix" src="{{defaultPic}}" bindtap="showLook"></image>
 <button hidden="{{b_pic_hidden}}" bindtap="choose_pic">{{btn_word}}</button>
 <form bindsubmit="add_word">
 <input hidden="{{a_word_hidden}}" value="{{word_value}}" name="word" class="word_input" placeholder-class="word_input_p" placeholder="在这里输入要添加的文字" type="text"/>
@@ -52,4 +52,8 @@
 <button class="btn" type="primary" hidden="{{a_word_hidden}}" form-type="submit">点击生成表情</button>
 <button class="btn" hidden="{{a_word_hidden}}" bindtap="cancel">取消</button>
 </form>
+
+<view class="text_show_view" hidden="{{b_pic_hidden}}">
+    <text class="text_show" bindtap="help">---使用帮助---</text>
+</view>
 </view>

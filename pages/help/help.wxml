@@ -1,0 +1,5 @@
+<!--pages/help/help.wxml-->
+<view class="vi">
+<image class="vimg" mode="widthFix" src="http://ovstg74bg.bkt.clouddn.com/help.png"></image>
+<button class="btn" bindtap="back">返回</button>
+</view>
