@@ -39,7 +39,7 @@ Page({
     else{
       this.setData({
         weixinBtn: false,
-        weixinBtnText: '微信登录'
+        weixinBtnText: '微信授权登录'
       })
     }
   },
