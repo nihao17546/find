@@ -412,29 +412,31 @@ Page({
   imgError:function(e){
     var index = parseInt(e.currentTarget.dataset.index),
       pa = parseInt(e.currentTarget.dataset.pa);
-      var pk;
-    if(pa==0){
+    var pk;
+    if (pa == 0) {
       pk = "pics[" + index + "].path1";
     }
-    else if(pa==1){
+    else if (pa == 1) {
       pk = "pics[" + index + "].path2";
     }
-    else{
+    else {
       pk = "pics[" + index + "].path3";
     }
-    this.setData({
-      [pk]: app.data.errPic
-    })
     var picId = this.data.picIds[index * 3 + pa];
-    wx.request({
-      url: app.data.errorUrl,
-      data:{
-        picId: picId,
-        errMsg: e.detail.errMsg
-      },
-      success:function(res){
+    if (picId) {
+      this.setData({
+        [pk]: app.data.errPic
+      })
+      wx.request({
+        url: app.data.errorUrl,
+        data: {
+          picId: picId,
+          errMsg: e.detail.errMsg
+        },
+        success: function (res) {
 
-      }
-    })
+        }
+      })
+    }
   }
 })

@@ -617,20 +617,22 @@ Page({
     else {
       pk = "pics[" + index + "].path3";
     }
-    this.setData({
-      [pk]: app.data.errPic
-    })
     var picId = this.data.picIds[index * 3 + pa];
-    wx.request({
-      url: app.data.errorUrl,
-      data: {
-        picId: picId,
-        errMsg: e.detail.errMsg
-      },
-      success: function (res) {
+    if(picId){
+      this.setData({
+        [pk]: app.data.errPic
+      })
+      wx.request({
+        url: app.data.errorUrl,
+        data: {
+          picId: picId,
+          errMsg: e.detail.errMsg
+        },
+        success: function (res) {
 
-      }
-    })
+        }
+      })
+    }
   },
 
   pageFirst:function(){
