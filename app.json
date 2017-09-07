@@ -3,7 +3,8 @@
     "pages/pic/pic",
     "pages/my/my",
     "pages/look/look",
-    "pages/help/help"
+    "pages/help/help",
+    "pages/face/face"
   ],
   "window": {
     "navigationBarTitleText": "FIND",
@@ -18,6 +19,9 @@
       },{
         "pagePath": "pages/look/look",
         "text": "表情制作"
+      },{
+        "pagePath": "pages/face/face",
+        "text": "颜值"
       },{
         "pagePath": "pages/my/my",
         "text": "我的"
