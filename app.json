@@ -9,7 +9,7 @@
   ],
   "window": {
     "navigationBarTitleText": "FIND",
-    "backgroundTextStyle": "dark",
+    "backgroundTextStyle": "#000000",
     "backgroundColor": "#eeeeee"
   },
   "tabBar": {
@@ -28,11 +28,11 @@
         "text": "我的"
       }
     ],
-    "color": "gray",
+    "color": "#808080",
     "selectedColor": "#CD5C5C",
-    "backgroundColor":"white",
-    "position": "bottom",
-    "borderStyle": "black"
+    "backgroundColor":"#FFFFFF",
+    "position": "top",
+    "borderStyle": "#000000"
   },
   "networkTimeout": {
     "request": 10000,

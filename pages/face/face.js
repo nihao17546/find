@@ -126,7 +126,7 @@ Page({
         })
       }
       else {
-        title = "哈哈,我的颜值" + this.data.faces[0].beauty + "，你也来测测吧";
+        title = "哈哈,刚测出我的年龄" + this.data.faces[0].age + ",我的颜值" + this.data.faces[0].beauty + ",你也来测测吧";
         path = "/pages/face/face?msg=" + app.data.user.id;
       }
     }
@@ -189,7 +189,7 @@ Page({
                 if (da.result.face.length == 0){
                   wx.showModal({
                     title: '提示',
-                    content: '亲，您上传的照片好像没有找到人呢,重新上传一张高清无码照片吧～',
+                    content: '您上传的照片没有识别出人物头像,重新上传一张高清无码照片吧～',
                     showCancel: false,
                     success: function (res) {
                       if (res.confirm) {
