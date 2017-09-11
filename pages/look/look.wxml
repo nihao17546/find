@@ -1,8 +1,8 @@
 <view class="tou_view">
 <image class="tou" mode="widthFix" src="{{defaultPic}}" bindtap="showLook"></image>
-<button hidden="{{b_pic_hidden}}" bindtap="choose_pic">{{btn_word}}</button>
+<button class="choose_btn" type="primary" hidden="{{b_pic_hidden}}" bindtap="choose_pic">{{btn_word}}</button>
 <form bindsubmit="add_word">
-<input hidden="{{a_word_hidden}}" value="{{word_value}}" name="word" class="word_input" placeholder-class="word_input_p" placeholder="在这里输入要添加的文字" type="text"/>
+<input class="input" hidden="{{a_word_hidden}}" value="{{word_value}}" name="word" class="word_input" placeholder-class="word_input_p" placeholder="在这里输入要添加的文字" type="text"/>
 
 <view class="classname" hidden="{{a_word_hidden}}">
 <view class="cc">选择字体颜色:</view>

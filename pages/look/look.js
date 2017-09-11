@@ -29,6 +29,7 @@ Page({
    */
   onReady: function () {
     var the = this;
+    var the = this;
     wx.request({
       url: app.data.getHelpSrcUrl,
       data: {
@@ -273,7 +274,7 @@ Page({
               mess = da.message;
             }
             wx.showModal({
-              title: '图片处理错误',
+              title: '提示',
               content: mess,
               showCancel: false,
               success: function (res) {
@@ -467,11 +468,17 @@ Page({
   },
 
   help: function() {
-    // wx.redirectTo({
+    // wx.navigateTo({
     //   url: "/pages/help/help"
     // })
     wx.previewImage({
       urls: [this.data.help_src]
+    })
+  },
+
+  about: function () {
+    wx.navigateTo({
+      url: "/pages/about/about"
     })
   }
 })

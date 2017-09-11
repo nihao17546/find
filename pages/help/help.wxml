@@ -1,6 +1,4 @@
 <!--pages/help/help.wxml-->
-<text class="back_text" bindtap="back">返回表情制作页</text>
 <view class="vi">
 <image class="vimg" mode="widthFix" src="{{help_src}}"></image>
-<button class="btn" type="primary" bindtap="back">返回表情制作页</button>
 </view>

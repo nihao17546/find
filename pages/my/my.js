@@ -816,5 +816,10 @@ Page({
     else if(len<-150){
       this.pageNext()
     }
+  },
+  about: function () {
+    wx.navigateTo({
+      url: "/pages/about/about"
+    })
   }
 })

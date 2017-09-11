@@ -1,4 +1,4 @@
-// pages/help/help.js
+// pages/about/about.js
 var app = getApp()
 Page({
 
@@ -6,7 +6,7 @@ Page({
    * 页面的初始数据
    */
   data: {
-    help_src: "http://ovstg74bg.bkt.clouddn.com/help1.png"
+    content:""
   },
 
   /**
@@ -22,14 +22,14 @@ Page({
   onReady: function () {
     var the = this;
     wx.request({
-      url: app.data.getHelpSrcUrl,
+      url: app.data.getContentUrl,
       data: {
 
       },
       success: function (res) {
         if (res.data.code == 200) {
           the.setData({
-            help_src: res.data.result
+            content: res.data.result
           })
         }
       },
@@ -81,5 +81,31 @@ Page({
    */
   onShareAppMessage: function () {
   
+  },
+
+  copywx: function () {
+    wx.setClipboardData({
+      data: 'nhweiwin',
+      success: function (res) {
+        wx.showToast({
+          title: '微信号复制成功',
+          icon: 'success',
+          duration: 1100
+        })
+      }
+    })
+  },
+
+  copyqq: function () {
+    wx.setClipboardData({
+      data: '420584320',
+      success: function (res) {
+        wx.showToast({
+          title: 'QQ号复制成功',
+          icon: 'success',
+          duration: 1100
+        })
+      }
+    })
   }
 })

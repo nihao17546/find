@@ -108,10 +108,10 @@ margin-top: 50px;
   background-color: white;
 }
 .suggestion{
-  margin-bottom: 20px;
-  margin-top: 5px;
+  margin-bottom: 2px;
+  margin-top: 2px;
   font-size: 12px;
-  width: 100%;
+  width: 90%;
   text-align: center;
 }
 .textarea_content{

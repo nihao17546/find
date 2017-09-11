@@ -1,4 +1,37 @@
 <!--pages/face/face.wxml-->
-<text>{{page}}.wxml</text>
-<button open-type="share">转发</button>
-{{msg}}
+<view class="tou_view">
+<image class="tou" mode="widthFix" src="{{defaultPic}}" bindtap="showLook"></image>
+<button type="primary" class="choose_class" bindtap="choose_pic">{{choose_text}}</button>
+<view class="classname" wx:for="{{faces}}">
+{{item.title}}
+<view class="v">
+<text class="title">类型: </text>
+<text class="value">{{item.type}}</text>,
+<text class="title">年龄: </text>
+<text class="value">{{item.age}}</text>,
+<text class="title">性别: </text>
+<text class="value">{{item.gender}}</text>
+</view>
+<view class="v">
+<text class="title">表情: </text>
+<text class="value">{{item.expression}}</text>,
+<text class="title">肤色: </text>
+<text class="value">{{item.race}}</text>,
+<text class="title">眼镜: </text>
+<text class="value">{{item.glasses}}</text>
+</view>
+<view class="v">
+<text class="title">颜值: </text>
+<text class="beauty">{{item.beauty}}</text>
+</view>
+</view>
+
+<button class="share" hidden="{{share_hidden}}" open-type="share">炫耀一下</button>
+</view>
+
+
+<text class="a" hidden="{{a.hidden}}" style="top:{{a.top}}px;left:{{a.left}}px;">A</text>
+<text class="a" hidden="{{b.hidden}}" style="top:{{b.top}}px;left:{{b.left}}px;">B</text>
+<text class="a" hidden="{{c.hidden}}" style="top:{{c.top}}px;left:{{c.left}}px;">C</text>
+<text class="a" hidden="{{d.hidden}}" style="top:{{d.top}}px;left:{{d.left}}px;">D</text>
+<text class="a" hidden="{{e.hidden}}" style="top:{{e.top}}px;left:{{e.left}}px;">E</text>

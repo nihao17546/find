@@ -15,6 +15,8 @@ App({
     suggestionUrl: "https://www.nihaov.com/user/suggestion",
     uploadUrl: "https://www.nihaov.com/upload/look",
     getHelpSrcUrl: "https://www.nihaov.com/getHelpSrc",
+    faceUrl: "https://www.nihaov.com/upload/face",
+    getContentUrl: "https://www.nihaov.com/getContent",
     user: {},
     reloadFavo: false
   },

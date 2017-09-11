@@ -8,12 +8,16 @@
   width: 200px;
   border: 1px solid gray;
 }
+.input{
+  font-size: 15px;
+}
 .word_input{
   border: 1px solid gray;
   border-radius: 5px;
   height: 30px;
   margin-left: 5px;
   margin-right: 5px;
+  font-size: 15px;
 }
 .classname{
   padding: 3px;
@@ -22,15 +26,18 @@
   background-color: gray;
   margin-left: 5px;
   margin-right: 5px;
+  font-size: 14px;
 }
 .cc{
   text-align: left;
+  font-size: 15px;
 }
 .btn{
   margin-top: 10px;
-  margin-left: 5px;
-  margin-right: 5px;
+  margin-left: 20px;
+  margin-right: 20px;
   margin-bottom: 5px;
+  font-size: 15px;
 }
 .text_show_view{
 width: 100%;
@@ -41,4 +48,16 @@ margin-top: 30px;
 }
 .text_show{
   font-size: 15px;
+}
+.choose_btn{
+  margin-top: 20px;
+  margin-left: 20px;
+  margin-right: 20px;
+}
+.about{
+  font-size: 8px;
+  width: 45px;
+  position: fixed;
+  bottom: 10px;
+  right: 10px;
 }

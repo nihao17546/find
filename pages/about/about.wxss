@@ -1,0 +1,38 @@
+/* pages/about/about.wxss */
+.head{
+  font-size: 23px;
+  color: black;
+  margin-left: 10px;
+}
+.classname{
+  margin-top: 20px;
+}
+.content{
+  font-size: 15px;
+  color: gray;
+}
+.cla{
+  margin: 10px;
+}
+.claa{
+  margin: 15px;
+}
+.head1{
+  font-size: 18px;
+  color: black;
+}
+.btn{
+  font-size: 9px;
+  width: 100px;
+  float: right;
+}
+.content1{
+  font-size: 14px;
+}
+.content2{
+  font-size: 14px;
+}
+.content3{
+  font-size: 14px;
+  margin-left: 53px;
+}

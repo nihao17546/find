@@ -1,0 +1,32 @@
+<!--pages/about/about.wxml-->
+<view class="classname">
+
+<text class="head">关于</text>
+
+<view class="claa">
+<text class="content">{{content}}</text>
+</view>
+
+<view class="cla">
+<text class="head1">小程序定制</text>
+</view>
+
+<view class="cla">
+<text class="content1">微信：</text>
+<text class="content2">nhweiwin</text>
+<button class="btn" bindtap="copywx">复制微信号</button>
+</view>
+
+<view class="cla">
+<text class="content1">QQ：</text>
+<text class="content2">420584320</text>
+<button class="btn" bindtap="copyqq">复制QQ号</button>
+</view>
+
+<view class="cla">
+<text class="content1">官网：</text>
+<text class="content2">http://www.nihaov.com</text>
+</view>
+<text class="content3">http://www.meetwo.me</text>
+
+</view>

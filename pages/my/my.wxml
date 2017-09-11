@@ -40,7 +40,8 @@
  </loading>
 
 </view>
-<view class="suggestion" bindtap="showSuggestion" style="display:{{hidden_all}}">意见反馈</view>
+<button class="suggestion" bindtap="showSuggestion" style="display:{{hidden_all}}">意见反馈</button>
+<button class="suggestion" bindtap="about" style="display:{{hidden_all}};margin-bottom:10px;">关于</button>
 
 <view class="suggestion_view both_class" hidden="{{hidden_suggestion}}">
 <view class="text_show_view">
